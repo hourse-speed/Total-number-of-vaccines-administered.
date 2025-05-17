@@ -1,25 +1,18 @@
-module MyModule::VaccinationTracker {
+# VaccinationTracker Smart Contract
 
-    use aptos_framework::signer;
+A simple Move smart contract on the Aptos blockchain to manage and track public vaccination campaigns.
 
-    /// Struct representing a vaccination campaign
-    struct Campaign has store, key {
-        total_vaccinated: u64, // Total vaccinations recorded
-        target: u64,           // Target number of vaccinations
-    }
+## 📄 Description
 
-    /// Initialize a new vaccination campaign with a target
-    public fun start_campaign(admin: &signer, target: u64) {
-        let campaign = Campaign {
-            total_vaccinated: 0,
-            target,
-        };
-        move_to(admin, campaign);
-    }
+This smart contract allows a public health authority (admin) to:
+- Start a vaccination campaign with a target number.
+- Record each vaccination event on-chain.
 
-    /// Record one vaccination event
-    public fun record_vaccination(admin: &signer) acquires Campaign {
-        let campaign = borrow_global_mut<Campaign>(signer::address_of(admin));
-        campaign.total_vaccinated = campaign.total_vaccinated + 1;
-    }
-}
+Each campaign stores:
+- `total_vaccinated`: Number of people vaccinated so far.
+- `target`: Total vaccination goal.
+
+## 📦 Module
+
+```move
+module MyModule::VaccinationTracker
